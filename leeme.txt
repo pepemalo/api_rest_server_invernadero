@@ -1,0 +1,19 @@
+
+Instalar entorno virtual:
+    pip install virtualenv
+
+Crear entorno virtual:
+    virtualenv venv
+
+Activar entorno virtual:
+    ./venv/Scripts/activate
+
+Comprobar que esta en el entorno virtual (venv)
+y
+Instalar requirements.txt:
+    pip install -r requirements.txt
+
+Cambiar la direccion IP por la cual va a salir la conxion:
+    host="0.0.0.0"  --> renplazar por la IP a usar.
+
+Crear la Carpeta logs.
