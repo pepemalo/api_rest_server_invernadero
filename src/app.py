@@ -18,8 +18,6 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/invernadero"
 mongo = PyMongo(app)
 
 time = str(datetime.today().strftime('%B %d %Y'))
-salida = str(f'../logs/salida_({str(time)}).log')
-logging.basicConfig(filename=salida, level=logging.DEBUG)
 
 """
     It takes a JSON object, inserts it into a MongoDB collection, and returns the ID of the inserted
@@ -129,4 +127,4 @@ def main():
 if __name__ == ('__main__'):
     app.logger.info(f'Se Inicia el Script de la API...{datetime.now()}')
     main()
-    app.run(host="192.168.2.112", port=5000, debug=True)
+    app.run(port=5000, debug=True)
