@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 # Setting the secret key for the Flask app and the MongoDB URI.
 app.secret_key = generate_password_hash("APIMongoPythonFlaskMonitoreo")
-app.config["MONGO_URI"] = "mongodb+srv://andercardozo04:wT8tfJh0DxfRvkzx@invernadero.zc3nzpt.mongodb.net/invernadero"
+app.config["MONGO_URI"] = "mongodb+srv://andercardozo04:wT8tfJh0DxfRvkzx@invernadero.zc3nzpt.mongodb.net/invernadero?retryWrites=true&w=majority"
 
 # Creating a connection to the MongoDB database.
 mongo = PyMongo(app)
