@@ -90,8 +90,8 @@ def post_filterDatos():
     response = json_util.dumps(registros)
     # return jsonify(registros)
     return Response(response, mimetype="application/json")
-print("respuesta de la peticion::: ",respuesta )
-print("Respuesta de la petición convertido", str(respuesta))
+print("respuesta de la peticion::: ",Response )
+print("Respuesta de la petición convertido", str(Response))
 
 
 """
