@@ -35,6 +35,7 @@ def post_addDatos():
     datos = request.json
     print("Contenido de 'datos':", datos)  # Agregamos esta línea para imprimir 'datos'
     print("Cumple la condición?: ", datos and isinstance(datos, list) and len(datos) > 0) #Linea verificar condicion
+    print("longitud es:: ",  len(datos))
     if datos and isinstance(datos, list) and len(datos) > 0: #Agregamos Validacion de los datos a insertar
         id = mongo.db.datoCollection.insert_many(datos)
         print("estos son los datos Insertados--> ", str(id.inserted_ids))
