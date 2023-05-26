@@ -31,22 +31,19 @@ def post_addDatos():
     print("Dentro del metodo agregar datos")
     app.logger.info(f'Funcionalidad post_addDatos... {datetime.now()}')
     datos = request.json
-    if datos:
-        id = mongo.db.datoCollection.insert_many(
-            datos
-        )
-        print("estos son los datos --> ",str(id.inserted_ids))
+    if datos and isinstance(datos, list) and len(datos) > 0:
+        id = mongo.db.datoCollection.insert_many(datos)
+        print("estos son los datos --> ", str(id.inserted_ids))
         response = jsonify({
             '_id': str(id.inserted_ids),
         })
         response.status_code = 201
         app.logger.info(f'Cantidad de datos -> {str(id.inserted_ids)} <--> {datetime.now()}')
+        print("resultado del metodo agregar datos ::", response)
         return response
-        print("resultado del metodo agregar datos ::",response)
     else:
         app.logger.error(f' addDatos incorrectos <--> {datetime.now()}')
         return {'message': 'addDatos incorrectos'}
-
 
 """
     It takes a request, queries the database, and returns a response
