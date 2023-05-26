@@ -28,19 +28,21 @@ time = str(datetime.today().strftime('%B %d %Y'))
 
 @app.route('/api/v1/addDatos', methods=['POST'])
 def post_addDatos():
+    print("Dentro del metodo agregar datos")
     app.logger.info(f'Funcionalidad post_addDatos... {datetime.now()}')
     datos = request.json
     if datos:
         id = mongo.db.datoCollection.insert_many(
             datos
         )
-        # print("estos son los datos --> ",str(id.inserted_ids))
+        print("estos son los datos --> ",str(id.inserted_ids))
         response = jsonify({
             '_id': str(id.inserted_ids),
         })
         response.status_code = 201
         app.logger.info(f'Cantidad de datos -> {str(id.inserted_ids)} <--> {datetime.now()}')
         return response
+        print("resultado del metodo agregar datos ::",response)
     else:
         app.logger.error(f' addDatos incorrectos <--> {datetime.now()}')
         return {'message': 'addDatos incorrectos'}
@@ -79,14 +81,18 @@ def get_datos():
 
 @app.route('/api/v1/filterDatos', methods=['POST'])
 def post_filterDatos():
-    print("Dentro de la metodo agregar datos")
+    print("Dentro del metodo filtrado de datos post")
     app.logger.info(f'Funcionalidad post_filterDatos...{datetime.now()}')
+    print("pasa app.logger.info(f'Funcionalidad post_filterDatos...{datetime.now()}') ")
     fecha_ini = request.json["fecha_ini"]
+    print("fecha inicio ::",fecha_ini)
     fecha_fin = request.json["fecha_fin"]
+    print("fecha inicio ::",fecha_fin)
     diccionario = {"FECHA": {"$gte": str(datetime.strptime(fecha_ini, "%Y-%m-%d")),
                              "$lte": str(datetime.strptime(fecha_fin, "%Y-%m-%d"))}}
     app.logger.info(f'Consulta {diccionario} <--> {datetime.now()}')
     registros = mongo.db.datoCollection.find(diccionario)
+    print("registros ::",registros)
     response = json_util.dumps(registros)
     # return jsonify(registros)
     return Response(response, mimetype="application/json")
