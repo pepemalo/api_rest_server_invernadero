@@ -28,13 +28,16 @@ time = str(datetime.today().strftime('%B %d %Y'))
 
 @app.route('/api/v1/addDatos', methods=['POST'])
 def post_addDatos():
-    print("Dentro del metodo agregar datos")
+    print("|---------------------------------------------|")
+    print("--------- METODO=['POST'] addDatos()----------|")
+    print("|---------------------------------------------|")
     app.logger.info(f'Funcionalidad post_addDatos... {datetime.now()}')
     datos = request.json
     print("Contenido de 'datos':", datos)  # Agregamos esta línea para imprimir 'datos'
+    print("Cumple la condición?: ", datos and isinstance(datos, list) and len(datos) > 0) #Linea verificar condicion
     if datos and isinstance(datos, list) and len(datos) > 0: #Agregamos Validacion de los datos a insertar
         id = mongo.db.datoCollection.insert_many(datos)
-        print("estos son los datos --> ", str(id.inserted_ids))
+        print("estos son los datos Insertados--> ", str(id.inserted_ids))
         response = jsonify({
             '_id': str(id.inserted_ids),
         })
@@ -45,6 +48,7 @@ def post_addDatos():
     else:
         app.logger.error(f' addDatos incorrectos <--> {datetime.now()}')
         return {'message': 'addDatos incorrectos'}
+        print("No se insertaron los datos ):")
 
 """
     It takes a request, queries the database, and returns a response
@@ -54,6 +58,9 @@ def post_addDatos():
 
 @app.route('/api/v1/datos', methods=['GET'])
 def get_datos():
+    print("|---------------------------------------------|")
+    print("|-------- METODO=['GET'] get_datos()----------|")
+    print("|---------------------------------------------|")
     app.logger.info(f'Funcionalidad get_datos...{datetime.now()}')
     datos = mongo.db.datoCollection.find()
     response = json_util.dumps(datos)
@@ -79,7 +86,9 @@ def get_datos():
 
 @app.route('/api/v1/filterDatos', methods=['POST'])
 def post_filterDatos():
-    print("Dentro del metodo filtrado de datos post")
+    print("|---------------------------------------------|")
+    print("|-------- METODO=['POST'] filterDatos()-------|")
+    print("|---------------------------------------------|")
     app.logger.info(f'Funcionalidad post_filterDatos...{datetime.now()}')
     print("pasa app.logger.info(f'Funcionalidad post_filterDatos...{datetime.now()}') ")
     fecha_ini = request.json["fecha_ini"]
@@ -109,12 +118,17 @@ print("Respuesta de la petición convertido", str(Response))
 
 @app.route('/api/v1/filterDatos/<fecha_ini>&<fecha_fin>', methods=['GET'])
 def get_filterDatos(fecha_ini, fecha_fin):
+    print("|----------------------------------------------------------------|")
+    print("|-------- METODO=['GET'] filterDatos(fecha_ini, fecha_fin)-------|")
+    print("|----------------------------------------------------------------|")
     app.logger.info(f'Funcionalidad get_filterDatos...{datetime.now()}')
     diccionario = {"FECHA": {"$gte": str(datetime.strptime(fecha_ini, "%Y-%m-%d")),
                              "$lte": str(datetime.strptime(fecha_fin, "%Y-%m-%d"))}}
     app.logger.info(f'Consulta {diccionario} <--> {datetime.now()}')
     registros = mongo.db.datoCollection.find(diccionario)
+    print("registros :",registros)
     response = json_util.dumps(registros)
+    print("response :",response)
     return Response(response, mimetype="application/json")
 
 
