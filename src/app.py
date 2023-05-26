@@ -31,7 +31,8 @@ def post_addDatos():
     print("Dentro del metodo agregar datos")
     app.logger.info(f'Funcionalidad post_addDatos... {datetime.now()}')
     datos = request.json
-    if datos and isinstance(datos, list) and len(datos) > 0:
+    print("Contenido de 'datos':", datos)  # Agregamos esta línea para imprimir 'datos'
+    if datos and isinstance(datos, list) and len(datos) > 0: #Agregamos Validacion de los datos a insertar
         id = mongo.db.datoCollection.insert_many(datos)
         print("estos son los datos --> ", str(id.inserted_ids))
         response = jsonify({
