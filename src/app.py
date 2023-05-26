@@ -79,6 +79,7 @@ def get_datos():
 
 @app.route('/api/v1/filterDatos', methods=['POST'])
 def post_filterDatos():
+    print("Dentro de la metodo agregar datos")
     app.logger.info(f'Funcionalidad post_filterDatos...{datetime.now()}')
     fecha_ini = request.json["fecha_ini"]
     fecha_fin = request.json["fecha_fin"]
@@ -89,6 +90,8 @@ def post_filterDatos():
     response = json_util.dumps(registros)
     # return jsonify(registros)
     return Response(response, mimetype="application/json")
+print("respuesta de la peticion::: ",respuesta )
+print("Respuesta de la petición convertido", str(respuesta))
 
 
 """
