@@ -34,9 +34,9 @@ def post_addDatos():
     app.logger.info(f'Funcionalidad post_addDatos... {datetime.now()}')
     datos = request.json
     print("Contenido de 'datos':", datos)  # Agregamos esta línea para imprimir 'datos'
-    print("Cumple la condición?: ", datos and isinstance(datos, list) and len(datos) > 0) #Linea verificar condicion
+    #print("Cumple la condición?: ", datos and isinstance(datos, list) and len(datos) > 0) #Linea verificar condicion
     print("longitud es:: ",  len(datos))
-    if datos and isinstance(datos, list) and len(datos) > 0: #Agregamos Validacion de los datos a insertar
+    if datos : #and isinstance(datos, list) and len(datos) > 0: #Agregamos Validacion de los datos a insertar
         id = mongo.db.datoCollection.insert_many(datos)
         print("estos son los datos Insertados--> ", str(id.inserted_ids))
         response = jsonify({
@@ -49,7 +49,7 @@ def post_addDatos():
     else:
         app.logger.error(f' addDatos incorrectos <--> {datetime.now()}')
         return {'message': 'addDatos incorrectos'}
-        print("No se insertaron los datos ):")
+        print("No se insertaron los datos ")
 
 """
     It takes a request, queries the database, and returns a response
