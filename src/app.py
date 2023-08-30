@@ -6,7 +6,7 @@ from datetime import datetime
 from bson import json_util
 import logging
 from bson.objectid import ObjectId
-
+#inicio del  proyecto
 # Creating a Flask application instance.
 app = Flask(__name__)
 
